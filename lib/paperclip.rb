@@ -224,7 +224,7 @@ module Paperclip
       min     = options[:greater_than] || (options[:in] && options[:in].first) || 0
       max     = options[:less_than]    || (options[:in] && options[:in].last)  || (1.0/0)
       range   = (min..max)
-      message = options[:message] || "file size must be between :min and :max bytes."
+      message = options[:message] || I18n.t("paperclip.errors.messages.size_not_in_between", :default => "file size must be between :min and :max bytes.")
 
       attachment_definitions[name][:validations][:size] = lambda do |attachment, instance|
         if attachment.file? && !range.include?(attachment.size.to_i)
@@ -267,7 +267,7 @@ module Paperclip
           unless valid_types.blank?
             content_type = attachment.instance_read(:content_type)
             unless valid_types.any?{|t| content_type.nil? || t === content_type }
-              options[:message] || "is not one of the allowed file types."
+              options[:message] || I18n.t("paperclip.errors.messages.not_allowed_content_type", :default => "is not one of the allowed file types.")
             end
           end
         end
