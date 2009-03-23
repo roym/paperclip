@@ -240,7 +240,7 @@ module Paperclip
 
     # Places ActiveRecord-style validations on the presence of a file.
     def validates_attachment_presence name, options = {}
-      message = options[:message] || "must be set."
+      message = options[:message] || I18n.t("paperclip.errors.messages.empty", :default => "must be set")
       attachment_definitions[name][:validations][:presence] = lambda do |attachment, instance|
         message unless attachment.file?
       end
